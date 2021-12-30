@@ -2,7 +2,7 @@ html,
 body {
     padding: 0;
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Public Sans', sans-serif;
 }
 
 a {
@@ -12,4 +12,120 @@ a {
 
 * {
     box-sizing: border-box;
+}
+
+.text-input {
+    border: none !important;
+    background-color: #e6ebf5 !important;
+}
+
+
+/* CSS talk bubble */
+
+.talk-bubble {
+    width: 100vw;
+    margin-top: 8px;
+    margin-bottom: 6px;
+    /* position: absolute; */
+}
+
+
+/* Right triangle placed top left flush. */
+
+
+/* .tri-right.border.left-top:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -40px;
+    right: auto;
+    top: -8px;
+    bottom: auto;
+    border: 32px solid;
+    border-color: #666 transparent transparent transparent;
+} */
+
+
+/* .tri-right.left-top:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -20px;
+    right: auto;
+    top: 0px;
+    bottom: auto;
+    border: 22px solid;
+    border-color: lightyellow transparent transparent transparent;
+} */
+
+.tri-right {
+    width: 70vw !important;
+    background-color: #7269ef;
+    position: relative;
+    float: left;
+    font-size: 16px;
+    margin-top: 4px;
+    text-align: left;
+    color: #fff;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.tri-left {
+    width: 70vw !important;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+    background-color: #f5f7fb;
+    position: relative;
+    float: right;
+    font-size: 16px;
+    margin-top: 4px;
+    text-align: right;
+}
+
+
+/* 
+.tri-left.border.right-top:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: -40px;
+    left: auto;
+    top: -8px;
+    bottom: auto;
+    border: 32px solid;
+    border-color: #666 transparent transparent transparent;
+}
+
+.tri-left.right-top:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: -20px;
+    left: auto;
+    top: 0px;
+    bottom: auto;
+    border: 22px solid;
+    border-color: lightyellow transparent transparent transparent;
+} */
+
+
+/* talk bubble contents */
+
+.talktext {
+    padding: 1em;
+    text-align: left;
+    line-height: 1.5em;
+}
+
+.talktext p {
+    /* remove webkit p margins */
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
 }
