@@ -1,9 +1,29 @@
+import Lottie from 'lottie-react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import loadingAnimation from "../public/loader.json";
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../data/mobx/store';
+import { useEffect } from 'react';
 
-const Home: NextPage = () => {
+const Home: NextPage = observer(() => {
+  const { authStore } = useStore();
+  const loggedIn = authStore.authState.loggedIn;
+  const error = authStore.authState.error;
+
+
+  useEffect(() => {
+    authStore.isUserLoggedIn();
+    if (loggedIn !== undefined) {
+      if (loggedIn) {
+        window.location.replace("/home");
+      } else {
+        window.location.replace("/login");
+      }
+    }
+  }, [loggedIn]);
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -14,7 +34,7 @@ const Home: NextPage = () => {
           href="https://fonts.googleapis.com/css?family=Public+Sans"
           rel="stylesheet"
         />
-          <link
+        <link
           href="https://fonts.googleapis.com/css?family=Montserrat"
           rel="stylesheet"
         />
@@ -24,51 +44,23 @@ const Home: NextPage = () => {
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossOrigin='anonymous'
         />
-        
+
       </Head>
 
-      <main className={styles.main}>
-       
-
-        <div className={styles.grid}>
-          <a href="/login" className={styles.card}>
-            <h2>Login page &rarr;</h2>
-          </a>
-
-          <a href="/home" className={styles.card}>
-            <h2>List view &rarr;</h2>
-          </a>
-
-          <a
-            href="/detail"
-            className={styles.card}
-          >
-            <h2>Detail View &rarr;</h2>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Contacts view &rarr;</h2>
-          </a>
-        </div>
+      <main>
+        <Lottie
+          style={{
+            width: "50%",
+            left: "25%",
+            position: "relative",
+            height: "100vh",
+            alignContent: "center"
+          }}
+          animationData={loadingAnimation}
+        />
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   )
-}
+});
 
 export default Home

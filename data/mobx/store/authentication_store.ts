@@ -4,14 +4,14 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../../config/firebase_setup';
 import { UserRepository } from '../../repository/user_repository';
 
-export interface AuthenticationState {
+export interface State {
     loading: string,
     loggedIn: boolean | undefined,
     user: User | undefined,
     error: string | undefined,
 }
 
-const initialState: AuthenticationState = {
+const initialState: State = {
     loading: "loading",
     loggedIn: undefined,
     user: undefined,
@@ -20,7 +20,7 @@ const initialState: AuthenticationState = {
 
 class AuthenticationStore {
     // create our observable state
-    @observable authState: AuthenticationState = initialState;
+    @observable authState: State = initialState;
 
     constructor() {
         makeObservable(this);
