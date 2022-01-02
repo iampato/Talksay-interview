@@ -47,7 +47,7 @@
     background-color: #e6ebf5;
     border: none;
     flex: 1;
-    min-width: 70vw;
+    min-width: 75vw;
 }
 
 .footerInput::placeholder {
@@ -55,7 +55,7 @@
 }
 
 .sendBtn {
-    width: 20vw;
+    width: 15vw;
     margin-left: 3vw;
     background-color: #7269ef;
     border-radius: 5px;

@@ -41,7 +41,7 @@ const LoginPage: NextPage = observer(() => {
                             <span><BsGoogle /></span>
                             <span className={styles.divider} />
                             {
-                                loading === "loading" ? "Loading" : "Login with Google"
+                                loading === "loading" ? "Loading..." : "Login with Google"
                             }
                         </Button>
                     </div>

@@ -6,14 +6,18 @@ import loadingAnimation from "../public/loader.json";
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../data/mobx/store';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const Home: NextPage = observer(() => {
   const { authStore } = useStore();
   const loggedIn = authStore.authState.loggedIn;
   const error = authStore.authState.error;
 
+  const router = useRouter();
 
   useEffect(() => {
+    router.prefetch('/login')
+
     authStore.isUserLoggedIn();
     if (loggedIn !== undefined) {
       if (loggedIn) {
@@ -23,7 +27,7 @@ const Home: NextPage = observer(() => {
       }
     }
   }, [loggedIn]);
-  
+
   return (
     <div className={styles.container}>
       <Head>

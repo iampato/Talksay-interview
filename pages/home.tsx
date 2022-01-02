@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Navbar } from "react-bootstrap";
 import { RiChatSmile2Fill, RiContactsFill, RiProfileFill } from "react-icons/ri";
 import ChatsPage from "../components/chats_page";
+import ContactsPage from "../components/contacts_page";
 import styles from "../styles/Main.module.css";
+import Head from 'next/head';
 
 const HomePage: NextPage = () => {
     const [tab, setTab] = useState(0);
@@ -14,9 +16,9 @@ const HomePage: NextPage = () => {
 
     return (
         <>
-            <head>
-                <title>TalkChat | Home</title>
-            </head>
+            <Head>
+                <title>ChatTalk | Home</title>      
+            </Head>
 
             <Navbar fixed="bottom">
                 <div className={styles.menu}>
@@ -48,11 +50,11 @@ const HomePage: NextPage = () => {
                 <div className="tab-content py-0 px-0">
                     <div className={"tab-pane fade show " + (tab === 0 ? "active" : "")} role="tabpanel"
                         aria-labelledby="overview-tab">
-                        <ChatsPage/>
+                        <ChatsPage />
                     </div>
                     <div className={"tab-pane fade show " + (tab === 1 ? "active" : "")} role="tabpanel"
                         aria-labelledby="overview-tab">
-                        <p>Contacts</p>
+                        <ContactsPage />
                     </div>
                     <div className={"tab-pane fade show " + (tab === 2 ? "active" : "")} role="tabpanel"
                         aria-labelledby="overview-tab">
