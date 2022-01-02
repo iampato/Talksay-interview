@@ -1,23 +1,41 @@
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar } from "react-bootstrap";
 import { RiChatSmile2Fill, RiContactsFill, RiProfileFill } from "react-icons/ri";
 import ChatsPage from "../components/chats_page";
 import ContactsPage from "../components/contacts_page";
 import styles from "../styles/Main.module.css";
 import Head from 'next/head';
+import { observer } from 'mobx-react-lite';
+import { useStore } from "../data/mobx/store";
+import { useRouter } from 'next/router';
 
-const HomePage: NextPage = () => {
+const HomePage: NextPage = observer(() => {
     const [tab, setTab] = useState(0);
+
+    const { authStore } = useStore();
+    const loggedIn = authStore.authState.loggedIn;
+    const router = useRouter();
 
     const onTabChange = (tab: number) => {
         setTab(tab);
     };
 
+
+    useEffect(() => {
+        router.prefetch('/login')
+        authStore.isUserLoggedIn();
+        if (loggedIn !== undefined) {
+            if (!loggedIn) {
+                window.location.replace("/login");
+            }
+        }
+    }, [loggedIn]);
+
     return (
         <>
             <Head>
-                <title>ChatTalk | Home</title>      
+                <title>ChatTalk | Home</title>
             </Head>
 
             <Navbar fixed="bottom">
@@ -64,5 +82,6 @@ const HomePage: NextPage = () => {
             </div>
         </>
     );
-}
+});
+
 export default HomePage;
