@@ -76,8 +76,6 @@ replace the content starting with `<` and ending with `>` with credentials obtai
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
