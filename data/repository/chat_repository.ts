@@ -133,7 +133,7 @@ export namespace ChatRepository {
             // alert(chatId);
             const qr = query(conversationsCollection, where("id", "==", chatId), limit(1));
             const querySnapshot = await getDocs(qr);
-            
+
             let data = querySnapshot.docs[0];
             let updateRef = doc(ourDb, "chats", `${data.id}`);
 
@@ -156,10 +156,14 @@ export namespace ChatRepository {
             }
 
             let conversations = await getChats(myUid);
+            console.log({ conversations });
             if (conversations !== undefined) {
                 for (let i = 0; i < conversations.length; i++) {
                     if (conversations[i].uid.includes(otherUid) && conversations[i].uid.includes(myUid)) {
-                        let updateRef = doc(ourDb, "chats", `${conversations[i].id}`);
+                        const qr = query(conversationsCollection, where("id", "==", conversations[i].id), limit(1));
+                        const querySnapshot = await getDocs(qr);
+                        let data = querySnapshot.docs[0];
+                        let updateRef = doc(ourDb, "chats", `${data.id}`);
                         await updateDoc(updateRef, {
                             messages: arrayUnion(msgObj),
                             createdAt: serverTimestamp(),
