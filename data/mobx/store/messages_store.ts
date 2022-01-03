@@ -1,6 +1,7 @@
+import { onSnapshot, query } from "firebase/firestore";
 import { observable, makeObservable, action, runInAction } from "mobx";
 import { DbMessage } from "../../models/db_message";
-import { ChatRepository } from "../../repository/chat_repository";
+import { ChatRepository, conversationsCollection } from "../../repository/chat_repository";
 
 export interface State {
     loading: string,
@@ -31,38 +32,42 @@ class MessageStore {
             this.state.addState = undefined;
             this.state.loading = "loading";
         });
-        ChatRepository.getMessages(id)
-            .then(res => {
-                if (res != undefined) {
-                    runInAction(() => {
-                        this.state = {
-                            ...this.state,
-                            error: undefined,
-                            loading: "idle",
-                            payload: res
+        const q = query(conversationsCollection);
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.docChanges().forEach((change) => {
+                ChatRepository.getMessages(id)
+                    .then(res => {
+                        if (res != undefined) {
+                            runInAction(() => {
+                                this.state = {
+                                    ...this.state,
+                                    error: undefined,
+                                    loading: "idle",
+                                    payload: res
+                                }
+                            });
+                        } else {
+                            runInAction(() => {
+                                this.state = {
+                                    ...this.state,
+                                    error: "An error occurred",
+                                    loading: "idle",
+                                }
+                            });
                         }
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        runInAction(() => {
+                            this.state = {
+                                ...this.state,
+                                error: (e as Error).message,
+                                loading: "idle",
+                            }
+                        });
                     });
-                } else {
-                    runInAction(() => {
-                        this.state = {
-                            ...this.state,
-                            error: "An error occurred",
-                            loading: "idle",
-                        }
-                    });
-                }
-            })
-            .catch(e => {
-                console.error(e);
-                runInAction(() => {
-                    this.state = {
-                        ...this.state,
-                        error: (e as Error).message,
-                        loading: "idle",
-                    }
-                });
             });
-
+        });
     }
     @action
     getMessages2 = (myid: string, otheruid: string) => {
@@ -70,38 +75,42 @@ class MessageStore {
             this.state.addState = undefined;
             this.state.loading = "loading";
         });
-        ChatRepository.getMessages2(myid, otheruid)
-            .then(res => {
-                if (res != undefined) {
-                    runInAction(() => {
-                        this.state = {
-                            ...this.state,
-                            error: undefined,
-                            loading: "idle",
-                            payload: res
+        const q = query(conversationsCollection);
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.docChanges().forEach((change) => {
+                ChatRepository.getMessages2(myid, otheruid)
+                    .then(res => {
+                        if (res != undefined) {
+                            runInAction(() => {
+                                this.state = {
+                                    ...this.state,
+                                    error: undefined,
+                                    loading: "idle",
+                                    payload: res
+                                }
+                            });
+                        } else {
+                            runInAction(() => {
+                                this.state = {
+                                    ...this.state,
+                                    error: "An error occurred",
+                                    loading: "idle",
+                                }
+                            });
                         }
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        runInAction(() => {
+                            this.state = {
+                                ...this.state,
+                                error: (e as Error).message,
+                                loading: "idle",
+                            }
+                        });
                     });
-                } else {
-                    runInAction(() => {
-                        this.state = {
-                            ...this.state,
-                            error: "An error occurred",
-                            loading: "idle",
-                        }
-                    });
-                }
-            })
-            .catch(e => {
-                console.error(e);
-                runInAction(() => {
-                    this.state = {
-                        ...this.state,
-                        error: (e as Error).message,
-                        loading: "idle",
-                    }
-                });
             });
-
+        });
     }
 
     @action

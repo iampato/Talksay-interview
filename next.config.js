@@ -15,23 +15,13 @@ module.exports = {
             '/': { page: '/' },
             '/login': { page: '/login' },
             '/home': { page: '/home' },
+            '/detail': { page: '/detail' },
             '/profile': {
                 page: '/profile',
                 query: {
                     id: 'id'
                 }
             },
-            '/detail': {
-                page: '/detail',
-                query: {
-                    chatId: 'chatId',
-                    senderId: 'senderId',
-                    receipentId: 'receipentId',
-                    displayName: 'displayName',
-                    photoUrl: 'photoUrl',
-                }
-            },
-
         }
     },
 }

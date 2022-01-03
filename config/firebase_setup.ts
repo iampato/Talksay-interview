@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, Firestore } from 'firebase/firestore/lite';
+import { getFirestore } from 'firebase/firestore';
 import "firebase/auth";
 import "firebase/firestore";
 import { initializeApp, getApps, } from "firebase/app";

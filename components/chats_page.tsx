@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import loadingAnimation from "../public/empty.json";
 import Lottie from "lottie-react";
 import { auth } from "../config/firebase_setup";
+import { useAppContext } from "./app_context";
 
 const ChatsPage: NextPage = () => {
 
@@ -46,6 +47,8 @@ const ChatsPage: NextPage = () => {
     );
 }
 const Conversation = observer(() => {
+    const appContext = useAppContext();
+
     const { convoStore } = useStore();
     const loading = convoStore.state.loading;
     const error = convoStore.state.error;
@@ -93,16 +96,14 @@ const Conversation = observer(() => {
                                         <div onClick={() => {
                                             const currentUser = auth.currentUser;
                                             let otherUser = e.uid.filter(e => e !== currentUser?.uid ?? "");
-                                            router.push({
-                                                pathname: "/detail",
-                                                query: {
-                                                    chatId: e.id,
-                                                    senderId: currentUser?.uid ?? "",
-                                                    receipentId: otherUser[0] ?? "",
-                                                    displayName: e.displayName,
-                                                    photoUrl: e.photoURL,
-                                                },
-                                            })
+
+                                            appContext.setChatId(e.id);
+                                            appContext.setSenderId(currentUser?.uid ?? "");
+                                            appContext.setReceipentId(otherUser[0] ?? "");
+                                            appContext.setDisplayName(e.displayName);
+                                            appContext.setPhotoUrl(e.photoURL);
+                                            router.push("/detail");
+
                                         }} className={styles.convocard}>
                                             <Image className={styles.convoimg} src={e.photoURL} roundedCircle />
                                             <div className={styles.convoname}>
