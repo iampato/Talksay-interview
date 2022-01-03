@@ -5,7 +5,7 @@ import { useStore } from "../data/mobx/store";
 import LoadingUi from "./loading_ui";
 import router from "next/router";
 import { Image } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { auth } from "../config/firebase_setup";
 
 const ContactsPage = observer(() => {
@@ -34,17 +34,16 @@ const ContactsPage = observer(() => {
                                 return <SnapItem key={e.id} margin={{ left: '10px', right: '10px' }} snapAlign="center">
                                     <div
                                         onClick={() => {
+                                            //  chatId, senderId, receipentId, displayName, photoUrl
                                             const currentUser = auth.currentUser;
-                                            console.log(currentUser?.uid);
                                             router.push({
                                                 pathname: "/detail",
                                                 query: {
-                                                    convoId: e.id + "-" + currentUser?.uid,
-                                                    myId: currentUser?.uid ?? "",
+                                                    chatId: undefined,
+                                                    senderId: currentUser?.uid ?? "",
                                                     receipentId: e.id,
-                                                    name: e.names,
+                                                    displayName: e.names,
                                                     photoUrl: e.photoUrl,
-                                                    email: e.email,
                                                 },
                                             })
                                         }}

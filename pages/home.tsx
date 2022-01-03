@@ -9,6 +9,7 @@ import Head from 'next/head';
 import { observer } from 'mobx-react-lite';
 import { useStore } from "../data/mobx/store";
 import { useRouter } from 'next/router';
+import ProfilePage from "../components/my_profile_page";
 
 const HomePage: NextPage = observer(() => {
     const [tab, setTab] = useState(0);
@@ -76,7 +77,7 @@ const HomePage: NextPage = observer(() => {
                     </div>
                     <div className={"tab-pane fade show " + (tab === 2 ? "active" : "")} role="tabpanel"
                         aria-labelledby="overview-tab">
-                        <p>Profile</p>
+                        <ProfilePage />
                     </div>
                 </div>
             </div>

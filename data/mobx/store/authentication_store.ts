@@ -31,7 +31,6 @@ class AuthenticationStore {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const uid = user.uid;
-                console.log({ uid });
                 runInAction(() => {
                     this.authState = {
                         ...this.authState,

@@ -1,4 +1,4 @@
-import { Navbar, Image, Form, Dropdown, Spinner } from "react-bootstrap";
+import { Navbar, Image, Form, Spinner } from "react-bootstrap";
 import { NextPage } from "next";
 import Head from 'next/head';
 import styles from "../styles/Detail.module.css";
@@ -9,43 +9,32 @@ import { SnapList, SnapItem } from 'react-snaplist-carousel';
 import { MdOutlineMoreVert } from 'react-icons/md';
 import { useEffect, useState } from "react";
 import { useStore } from "../data/mobx/store";
-import DbConversation from "../data/models/db_conversation";
-import { DbMessage } from "../data/models/db_message";
-import { v4 as uuidv4 } from 'uuid';
 import { observer } from "mobx-react-lite";
 import LoadingUi from "../components/loading_ui";
 import { auth } from "../config/firebase_setup";
 
 const DetailPage: NextPage = () => {
     const router = useRouter();
-    const [convoId, setConvoId] = useState("");
-    const [id, setId] = useState("");
-    const [name, setName] = useState("");
-    const [profile, setProfile] = useState("");
+    const { chatId, senderId, receipentId, displayName, photoUrl } = router.query;
     const { convoStore } = useStore();
     const { msgStore } = useStore();
 
     useEffect(() => {
-        setConvoId(router.query.convoId as string);
-        setId(router.query.myId as string);
-        setName(router.query.name as string);
-        setProfile(router.query.photoUrl as string);
-
-        // get messages
-        msgStore.getMessages(router.query.convoId as string);
-        //
-        let dx: DbConversation = {
-            id: router.query.convoId as string,
-            display_name: router.query.name as string,
-            sender_id: router.query.myId as string,
-            last_message: "",
-            receipentEmail: router.query.email as string,
-            receipentId: router.query.receipentId as string,
-            receipentPhoto: router.query.photoUrl as string,
-            time: new Date(),
+        convoStore.addConversations(
+            senderId as string,
+            receipentId as string,
+            displayName as string,
+            photoUrl as string,
+        );
+        if (chatId === undefined) {
+            // alert("chatId is undefined");
+            msgStore.getMessages2(senderId as string, receipentId as string);
+        } else {
+            // alert("chatId is defined");
+            msgStore.getMessages(chatId as string);
         }
-        convoStore.addConversations(dx);
-    }, [])
+    }, []);
+
     return (
         <>
             <Head>
@@ -60,8 +49,16 @@ const DetailPage: NextPage = () => {
             <Navbar fixed="top">
                 <div className={styles.header}>
                     <MdOutlineArrowBackIosNew size={23} onClick={() => router.back()} />
-                    <Image className={styles.headerImg} src={profile} roundedCircle />
-                    <h6>{name}</h6>
+                    <Image className={styles.headerImg} src={photoUrl as string} roundedCircle />
+                    <h6 onClick={() => {
+                        router.push({
+                            pathname: "/profile",
+                            query: {
+                                id: receipentId as string,
+                            },
+                        })
+                    }}
+                    >{displayName as string}</h6>
                     <MdOutlineMoreVert size={23} style={{ marginRight: 10 }} />
                 </div>
             </Navbar>
@@ -73,13 +70,17 @@ const DetailPage: NextPage = () => {
 
             {/* Bottom part */}
             <Navbar fixed="bottom">
-                <SendMessageView convoId={convoId} />
+                <SendMessageView
+                    chatId={chatId === undefined ? undefined : chatId as string}
+                    senderId={senderId as string}
+                    receipentId={receipentId as string}
+                />
             </Navbar>
         </>
     );
 }
 
-const SendMessageView: React.FC<{ convoId: string }> = observer(({ convoId }) => {
+const SendMessageView: React.FC<{ chatId?: string, senderId: string, receipentId: string }> = observer(({ chatId, senderId, receipentId }) => {
 
     const { msgStore } = useStore();
     const loading = msgStore.state.addLoading;
@@ -110,13 +111,11 @@ const SendMessageView: React.FC<{ convoId: string }> = observer(({ convoId }) =>
             <div
                 className={styles.sendBtn}
                 onClick={() => {
-                    let msg: DbMessage = {
-                        id: uuidv4(),
-                        message: message,
-                        time: new Date(),
-                        senderId: uuidv4(),
+                    if (chatId === undefined) {
+                        msgStore.addMessage2(senderId, receipentId, message);
+                    } else {
+                        msgStore.addMessage(chatId, senderId, message);
                     }
-                    msgStore.addMessage(convoId, msg);
                 }}
             >
                 {
@@ -144,19 +143,19 @@ const MessagesView = observer(() => {
                 >
                     {
                         messages && (
-                            messages.map((msg) => {
-                                return <SnapItem key={msg.id} margin={{ left: '10px', right: '10px' }} snapAlign="start">
+                            messages.map((msg, i) => {
+                                return <SnapItem key={i} margin={{ left: '10px', right: '10px' }} snapAlign="start">
                                     {
-                                        msg.id !== auth.currentUser?.uid ?? "" ? <div className="talk-bubble">
+                                        msg.senderId == auth.currentUser?.uid ?? "" ? <div className="talk-bubble">
                                             <div className="tri-left right-top">
                                                 <div className="talktext">
-                                                    <p>{msg.message}</p>
+                                                    <p>{msg.content}</p>
                                                 </div>
                                             </div>
                                         </div> : <div className="talk-bubble">
                                             <div className="tri-right left-top">
                                                 <div className="talktext">
-                                                    <p>{msg.message}</p>
+                                                    <p>{msg.content}</p>
                                                 </div>
                                             </div>
                                         </div>

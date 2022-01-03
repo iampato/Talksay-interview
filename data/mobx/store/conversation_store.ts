@@ -37,10 +37,10 @@ class ConversationStore {
         setTimeout(() => {
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
-                    ChatRepository.getConversation(user.uid)
+                    ChatRepository.getChats(user.uid)
                         .then(res => {
                             if (res !== undefined) {
-                                
+
                                 runInAction(() => {
                                     this.state = {
                                         ...this.state,
@@ -72,15 +72,15 @@ class ConversationStore {
                 }
             });
 
-        }, 1000);
+        }, 500);
 
     }
     @action
-    addConversations = (convo: DbConversation) => {
+    addConversations = (uid: string, otherUid: string, name: string, photoUrl: string) => {
         runInAction(() => {
             this.state.addLoading = "loading";
         });
-        ChatRepository.createConversation(convo)
+        ChatRepository.createChat(uid, otherUid, name, photoUrl)
             .then(res => {
                 if (res != undefined) {
                     runInAction(() => {
