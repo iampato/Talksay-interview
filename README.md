@@ -15,11 +15,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 At the end of the task here are the objectives
 - [x] Sign-in with google
 - [x] View all your previous conversations
-- [ ] Delete a previous conversations
 - [x] View messages in one conversation
-- [ ] Delete a single message in a conversation
 - [x] View my profile 
 - [x] View other user profile 
+- [ ] Delete a previous conversations
+- [ ] Delete a single message in a conversation
+- [ ] Make everything realtime !!!
 
 
 ## Technologies used
