@@ -12,6 +12,8 @@ import { useStore } from "../data/mobx/store";
 import { observer } from "mobx-react-lite";
 import LoadingUi from "../components/loading_ui";
 import { auth } from "../config/firebase_setup";
+import loadingAnimation from "../public/empty.json";
+import Lottie from "lottie-react";
 
 const DetailPage: NextPage = () => {
     const router = useRouter();
@@ -143,26 +145,45 @@ const MessagesView = observer(() => {
                 >
                     {
                         messages && (
-                            messages.map((msg, i) => {
-                                return <SnapItem key={i} margin={{ left: '10px', right: '10px' }} snapAlign="start">
-                                    {
-                                        msg.senderId == auth.currentUser?.uid ?? "" ? <div className="talk-bubble">
-                                            <div className="tri-left right-top">
-                                                <div className="talktext">
-                                                    <p>{msg.content}</p>
+                            messages.length === 0 ?
+                                <div style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignContent: "center",
+                                    alignItems: "center",
+                                }}>
+                                    <Lottie
+                                        style={{
+                                            position: "relative",
+                                            height: "40vh",
+                                            alignContent: "center"
+                                        }}
+                                        loop={false}
+                                        autoPlay={false}
+                                        animationData={loadingAnimation}
+                                    />
+                                    <p style={{ textAlign: "center", opacity: 0.5 }}>You have no messages</p>
+                                </div> : messages.map((msg, i) => {
+                                    return <SnapItem key={i} margin={{ left: '10px', right: '10px' }} snapAlign="start">
+                                        {
+                                            msg.senderId == auth.currentUser?.uid ?? "" ? <div className="talk-bubble">
+                                                <div className="tri-left right-top">
+                                                    <div className="talktext">
+                                                        <p>{msg.content}</p>
+                                                    </div>
+                                                </div>
+                                            </div> : <div className="talk-bubble">
+                                                <div className="tri-right left-top">
+                                                    <div className="talktext">
+                                                        <p>{msg.content}</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div> : <div className="talk-bubble">
-                                            <div className="tri-right left-top">
-                                                <div className="talktext">
-                                                    <p>{msg.content}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
+                                        }
 
-                                </SnapItem>;
-                            })
+                                    </SnapItem>;
+                                })
                         )
                     }
 
@@ -175,7 +196,7 @@ const MessagesView = observer(() => {
 
 DetailPage.getInitialProps = async (ctx) => {
     const { query } = ctx;
-    return {  };
+    return {};
 }
 
 export default withRouter(DetailPage);

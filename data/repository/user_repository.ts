@@ -1,11 +1,11 @@
 import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
-import { collection, query, addDoc, getDocs, where, limit } from "firebase/firestore/lite";
 import { auth, ourDb } from "../../config/firebase_setup";
 import DbUser, { userFromJson } from "../models/db_user";
+import { collection, query, where, onSnapshot, addDoc, getDocs, limit } from "firebase/firestore";
 
-
+export const userCollection = collection(ourDb, "users");
 export namespace UserRepository {
-    const userCollection = collection(ourDb, "users");
+
     const provider = new GoogleAuthProvider();
 
     export function loginUser(): Promise<User | undefined> {

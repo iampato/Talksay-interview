@@ -1,8 +1,9 @@
 import { onAuthStateChanged } from "firebase/auth";
+import { onSnapshot, query } from "firebase/firestore";
 import { observable, makeObservable, action, runInAction } from "mobx";
 import { auth } from "../../../config/firebase_setup";
 import DbConversation from "../../models/db_conversation";
-import { ChatRepository } from "../../repository/chat_repository";
+import { ChatRepository, conversationsCollection } from "../../repository/chat_repository";
 
 export interface State {
     loading: string,
@@ -34,46 +35,48 @@ class ConversationStore {
                 loading: "loading",
             }
         });
-        setTimeout(() => {
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    ChatRepository.getChats(user.uid)
-                        .then(res => {
-                            if (res !== undefined) {
+        const q = query(conversationsCollection);
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.docChanges().forEach((change) => {
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        ChatRepository.getChats(user.uid)
+                            .then(res => {
+                                if (res !== undefined) {
 
-                                runInAction(() => {
-                                    this.state = {
-                                        ...this.state,
-                                        error: undefined,
-                                        loading: "idle",
-                                        payload: res,
-                                    }
-                                });
-                            } else {
-                                runInAction(() => {
-                                    this.state = {
-                                        ...this.state,
-                                        error: "An error occurred",
-                                        loading: "idle",
-                                    }
-                                });
-                            }
-                        })
-                        .catch(e => {
-                            console.error(e);
-                            runInAction(() => {
-                                this.state = {
-                                    ...this.state,
-                                    error: (e as Error).message,
-                                    loading: "idle",
+                                    runInAction(() => {
+                                        this.state = {
+                                            ...this.state,
+                                            error: undefined,
+                                            loading: "idle",
+                                            payload: res,
+                                        }
+                                    });
+                                } else {
+                                    runInAction(() => {
+                                        this.state = {
+                                            ...this.state,
+                                            error: "An error occurred",
+                                            loading: "idle",
+                                        }
+                                    });
                                 }
+                            })
+                            .catch(e => {
+                                console.error(e);
+                                runInAction(() => {
+                                    this.state = {
+                                        ...this.state,
+                                        error: (e as Error).message,
+                                        loading: "idle",
+                                    }
+                                });
                             });
-                        });
-                }
+                    }
+                });
+
             });
-
-        }, 500);
-
+        });
     }
     @action
     addConversations = (uid: string, otherUid: string, name: string, photoUrl: string) => {

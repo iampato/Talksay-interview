@@ -1,6 +1,7 @@
+import { onSnapshot, query } from "firebase/firestore";
 import { action, makeObservable, observable, runInAction } from "mobx";
 import DbUser from "../../models/db_user";
-import { UserRepository } from "../../repository/user_repository";
+import { userCollection, UserRepository } from "../../repository/user_repository";
 
 export interface State {
     loading: string,
@@ -30,38 +31,44 @@ class UsersStore {
                 loading: "loading",
             }
         });
-        UserRepository.getUsers()
-            .then(res => {
-                if (res !== undefined) {
+        const q = query(userCollection);
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.docChanges().forEach((change) => {
+                UserRepository.getUsers()
+                    .then(res => {
+                        if (res !== undefined) {
 
-                    runInAction(() => {
-                        this.state = {
-                            ...this.state,
-                            error: undefined,
-                            loading: "idle",
-                            payload: res,
+                            runInAction(() => {
+                                this.state = {
+                                    ...this.state,
+                                    error: undefined,
+                                    loading: "idle",
+                                    payload: res,
+                                }
+                            });
+                        } else {
+                            runInAction(() => {
+                                this.state = {
+                                    ...this.state,
+                                    error: "An error occurred",
+                                    loading: "idle",
+                                }
+                            });
                         }
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        runInAction(() => {
+                            this.state = {
+                                ...this.state,
+                                error: (e as Error).message,
+                                loading: "idle",
+                            }
+                        });
                     });
-                } else {
-                    runInAction(() => {
-                        this.state = {
-                            ...this.state,
-                            error: "An error occurred",
-                            loading: "idle",
-                        }
-                    });
-                }
-            })
-            .catch(e => {
-                console.error(e);
-                runInAction(() => {
-                    this.state = {
-                        ...this.state,
-                        error: (e as Error).message,
-                        loading: "idle",
-                    }
-                });
             });
+        });
+
 
     }
 }

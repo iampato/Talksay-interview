@@ -1,13 +1,14 @@
 
-import { where, collection, addDoc, deleteDoc, doc, query, getDocs, setDoc, CollectionReference, DocumentData, getDoc, collectionGroup, updateDoc, arrayUnion, limit, serverTimestamp } from "firebase/firestore/lite";
+import { where, collection, addDoc, deleteDoc, doc, query, getDocs, setDoc, CollectionReference, DocumentData, getDoc, collectionGroup, updateDoc, arrayUnion, limit, serverTimestamp } from "firebase/firestore";
 import { auth, ourDb } from "../../config/firebase_setup";
 import DbConversation, { convoFromJson } from "../models/db_conversation";
 import { DbMessage, msgFromJson } from "../models/db_message";
 import { v4 as uuidv4 } from 'uuid';
 import { UserRepository } from "./user_repository";
 
+export const conversationsCollection = collection(ourDb, "chats");
 export namespace ChatRepository {
-    const conversationsCollection = collection(ourDb, "chats");
+
     // const messagesCollection = (id: string, newId: string) => doc(ourDb, 'conversations', id, "messages", newId);
     // const messagesCollection1 = (id: string) => collection(ourDb, "conversations", id.toString(), "messages");
 
@@ -82,19 +83,16 @@ export namespace ChatRepository {
     export async function getMessages(chatId: string): Promise<DbMessage[] | undefined> {
         try {
             const convo: DbMessage[] = [];
-            console.log({ chatId });
             const qr = query(conversationsCollection, where("id", "==", chatId), limit(1));
-            console.log({ qr });
             const querySnapshot = await getDocs(qr);
-            console.log({ querySnapshot });
-            let data = querySnapshot.docs[0].data();
-            console.log({ data });
-            let messages = data?.messages;
-            console.log({ messages });
-            messages.forEach((msg: any) => {
-                let model = JSON.stringify(msg);
-                convo.push(msgFromJson(model));
-            });
+            if (querySnapshot.docs.length > 0) {
+                let data = querySnapshot.docs[0].data();
+                let messages = data?.messages;
+                messages.forEach((msg: any) => {
+                    let model = JSON.stringify(msg);
+                    convo.push(msgFromJson(model));
+                });
+            }
             return convo;
         } catch (e) {
             console.error("Error adding document: ", e);

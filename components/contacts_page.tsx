@@ -6,7 +6,9 @@ import LoadingUi from "./loading_ui";
 import router from "next/router";
 import { Image } from "react-bootstrap";
 import { useEffect } from "react";
-import { auth } from "../config/firebase_setup";
+import { auth, ourDb } from "../config/firebase_setup";
+import loadingAnimation from "../public/empty.json";
+import Lottie from "lottie-react";
 
 const ContactsPage = observer(() => {
     const { usersStore } = useStore();
@@ -17,6 +19,7 @@ const ContactsPage = observer(() => {
     useEffect(() => {
         usersStore.getUsers();
     }, []);
+
 
     return (
         <>
@@ -29,8 +32,28 @@ const ContactsPage = observer(() => {
                 // height="58vh"
                 >
                     {
+
                         users && (
-                            users.map(e => {
+                            users.length === 0 ?
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignContent: "center",
+                                alignItems: "center",
+                            }}>
+                                <Lottie
+                                    style={{
+                                        position: "relative",
+                                        height: "40vh",
+                                        alignContent: "center"
+                                    }}
+                                    loop={false}
+                                    autoPlay={false}
+                                    animationData={loadingAnimation}
+                                />
+                                <p style={{ textAlign: "center", opacity: 0.5 }}>There are no contacts</p>
+                            </div> : users.map(e => {
                                 return <SnapItem key={e.id} margin={{ left: '10px', right: '10px' }} snapAlign="center">
                                     <div
                                         onClick={() => {
