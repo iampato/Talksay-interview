@@ -172,4 +172,10 @@ const MessagesView = observer(() => {
         </>
     );
 });
+
+DetailPage.getInitialProps = async (ctx) => {
+    const { query } = ctx;
+    return {  };
+}
+
 export default withRouter(DetailPage);

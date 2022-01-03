@@ -8,7 +8,6 @@ import styles from "../styles/Main.module.css";
 import Head from 'next/head';
 import { observer } from 'mobx-react-lite';
 import { useStore } from "../data/mobx/store";
-import { useRouter } from 'next/router';
 import ProfilePage from "../components/my_profile_page";
 
 const HomePage: NextPage = observer(() => {
@@ -16,7 +15,6 @@ const HomePage: NextPage = observer(() => {
 
     const { authStore } = useStore();
     const loggedIn = authStore.authState.loggedIn;
-    const router = useRouter();
 
     const onTabChange = (tab: number) => {
         setTab(tab);
@@ -24,7 +22,6 @@ const HomePage: NextPage = observer(() => {
 
 
     useEffect(() => {
-        router.prefetch('/login')
         authStore.isUserLoggedIn();
         if (loggedIn !== undefined) {
             if (!loggedIn) {

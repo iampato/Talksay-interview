@@ -55,4 +55,8 @@ const OtherProfilePage: NextPage = observer(() => {
     );
 });
 
+OtherProfilePage.getInitialProps = async (ctx) => {
+    const { id } = ctx.query;
+    return { id: id };
+}
 export default withRouter(OtherProfilePage);
