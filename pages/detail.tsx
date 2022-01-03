@@ -25,16 +25,16 @@ const DetailPage: NextPage = () => {
     let receipentId = appContext.receipentId;
     let displayName = appContext.displayName;
     let photoUrl = appContext.photoUrl;
-    
+
     const { convoStore } = useStore();
     const { msgStore } = useStore();
 
     useEffect(() => {
         convoStore.addConversations(
-            senderId as string,
-            receipentId as string,
-            displayName as string,
-            photoUrl as string,
+            appContext.senderId as string,
+            appContext.receipentId as string,
+            appContext.displayName as string,
+            appContext.photoUrl as string,
         );
         if (chatId === undefined) {
             // alert("chatId is undefined");
@@ -121,6 +121,8 @@ const SendMessageView: React.FC<{ chatId?: string, senderId: string, receipentId
             <div
                 className={styles.sendBtn}
                 onClick={() => {
+                    console.log("send message");
+                    console.log(chatId);
                     if (chatId === undefined) {
                         msgStore.addMessage2(senderId, receipentId, message);
                     } else {
