@@ -28,10 +28,7 @@ const LoginPage: NextPage = observer(() => {
                     <div className={styles.content}>
                         {/* <img src="/favicon.ico" alt="logo" /> */}
                         <h1>TalkChat</h1>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                        </p>
+                        <p>TalkChat is a community for African languages to thrive through live conversation. Create a room or listen in to people speaking your language!.</p>
                     </div>
 
                     <div onClick={() => {
