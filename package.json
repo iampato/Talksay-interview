@@ -19,6 +19,7 @@
         "react-bootstrap": "^2.0.4",
         "react-dom": "17.0.2",
         "react-icons": "^4.3.1",
+        "react-mobile-sized-view": "^2.0.0",
         "react-snaplist-carousel": "^4.3.0",
         "uuid": "^8.3.2"
     },
