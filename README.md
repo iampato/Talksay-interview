@@ -21,22 +21,21 @@ At the end of the task here are the objectives
 * Technologies used
     * [Typescript](https://www.typescriptlang.org//) For type safe incontractly to using Javasript
     * [next]() react js server side rendering
-    * [React](https://reactnative.dev) A web library 
+    * [React](https://reactnative.dev) A free and open-source front-end JavaScript library for building user interfaces 
 
 * Networking
-    * [Firebase auth]() for authentication purposes - Google signin
-    * [Firebase firestore](https://axios.com) as my realtime database
+    * [Firebase auth](https://firebase.google.com/products/auth) for authentication purposes - Google signin
+    * [Firebase firestore](https://firebase.google.com/products/firestore) as my realtime database
     
 
 * State-management
-    * [Mobx](https://react-redux.js.org) - 
+    * [Mobx](https://mobx.js.org/react-integration.html) - react version of mobx 
 
 * UI
     * [Lottie](https://www.npmjs.com/package/react-lottie) - for loader animations 
-    * [React Icons](https://www.npmjs.com/package/react-lottie) - for loader animations 
-    * [React Boostrap](https://www.npmjs.com/package/react-lottie) - for loader animations 
-    * [React Snap Carousel](https://www.npmjs.com/package/react-lottie) - for loader animations 
-    * [Lottie](https://www.npmjs.com/package/react-lottie) - for loader animations 
+    * [React Icons](https://www.npmjs.com/package/react-lottie) - icons utility library
+    * [React Boostrap](https://www.npmjs.com/package/react-lottie) - bootstrap library for react applications
+    * [React Snap Carousel](https://www.npmjs.com/package/react-lottie) - a carousel ui library
 
 
 * Test
