@@ -130,8 +130,10 @@ export namespace ChatRepository {
                 senderId: senderId,
                 time: new Date(),
             }
+            // alert(chatId);
             const qr = query(conversationsCollection, where("id", "==", chatId), limit(1));
             const querySnapshot = await getDocs(qr);
+            
             let data = querySnapshot.docs[0];
             let updateRef = doc(ourDb, "chats", `${data.id}`);
 

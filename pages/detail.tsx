@@ -14,10 +14,18 @@ import LoadingUi from "../components/loading_ui";
 import { auth } from "../config/firebase_setup";
 import loadingAnimation from "../public/empty.json";
 import Lottie from "lottie-react";
+import { useAppContext } from "../components/app_context";
 
 const DetailPage: NextPage = () => {
     const router = useRouter();
-    const { chatId, senderId, receipentId, displayName, photoUrl } = router.query;
+    const appContext = useAppContext();
+
+    let chatId = appContext.chatId;
+    let senderId = appContext.senderId;
+    let receipentId = appContext.receipentId;
+    let displayName = appContext.displayName;
+    let photoUrl = appContext.photoUrl;
+    
     const { convoStore } = useStore();
     const { msgStore } = useStore();
 
@@ -159,8 +167,8 @@ const MessagesView = observer(() => {
                                             height: "40vh",
                                             alignContent: "center"
                                         }}
-                                        loop={false}
-                                        autoPlay={false}
+                                        // loop={false}
+                                        // autoPlay={false}
                                         animationData={loadingAnimation}
                                     />
                                     <p style={{ textAlign: "center", opacity: 0.5 }}>You have no messages</p>

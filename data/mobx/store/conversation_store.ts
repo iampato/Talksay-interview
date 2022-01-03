@@ -35,6 +35,43 @@ class ConversationStore {
                 loading: "loading",
             }
         });
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                ChatRepository.getChats(user.uid)
+                    .then(res => {
+                        if (res !== undefined) {
+
+                            runInAction(() => {
+                                this.state = {
+                                    ...this.state,
+                                    error: undefined,
+                                    loading: "idle",
+                                    payload: res,
+                                }
+                            });
+                        } else {
+                            runInAction(() => {
+                                this.state = {
+                                    ...this.state,
+                                    error: "An error occurred",
+                                    loading: "idle",
+                                }
+                            });
+                        }
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        runInAction(() => {
+                            this.state = {
+                                ...this.state,
+                                error: (e as Error).message,
+                                loading: "idle",
+                            }
+                        });
+                    });
+            }
+        });
+
         const q = query(conversationsCollection);
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             querySnapshot.docChanges().forEach((change) => {

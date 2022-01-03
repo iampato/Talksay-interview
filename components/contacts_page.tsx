@@ -9,8 +9,10 @@ import { useEffect } from "react";
 import { auth, ourDb } from "../config/firebase_setup";
 import loadingAnimation from "../public/empty.json";
 import Lottie from "lottie-react";
+import { useAppContext } from "./app_context";
 
 const ContactsPage = observer(() => {
+    const appContext = useAppContext();
     const { usersStore } = useStore();
     const loading = usersStore.state.loading;
     const error = usersStore.state.error;
@@ -35,51 +37,48 @@ const ContactsPage = observer(() => {
 
                         users && (
                             users.length === 0 ?
-                            <div style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignContent: "center",
-                                alignItems: "center",
-                            }}>
-                                <Lottie
-                                    style={{
-                                        position: "relative",
-                                        height: "40vh",
-                                        alignContent: "center"
-                                    }}
-                                    loop={false}
-                                    autoPlay={false}
-                                    animationData={loadingAnimation}
-                                />
-                                <p style={{ textAlign: "center", opacity: 0.5 }}>There are no contacts</p>
-                            </div> : users.map(e => {
-                                return <SnapItem key={e.id} margin={{ left: '10px', right: '10px' }} snapAlign="center">
-                                    <div
-                                        onClick={() => {
-                                            //  chatId, senderId, receipentId, displayName, photoUrl
-                                            const currentUser = auth.currentUser;
-                                            router.push({
-                                                pathname: "/detail",
-                                                query: {
-                                                    chatId: undefined,
-                                                    senderId: currentUser?.uid ?? "",
-                                                    receipentId: e.id,
-                                                    displayName: e.names,
-                                                    photoUrl: e.photoUrl,
-                                                },
-                                            })
+                                <div style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignContent: "center",
+                                    alignItems: "center",
+                                }}>
+                                    <Lottie
+                                        style={{
+                                            position: "relative",
+                                            height: "40vh",
+                                            alignContent: "center"
                                         }}
-                                        className={styles.convocard}
-                                    >
-                                        <Image className={styles.convoimg} src={e.photoUrl} roundedCircle />
-                                        <div className={styles.convoname}>
-                                            <h6>{e.id === auth.currentUser?.uid ?? "" ? "You" : e.names}</h6>
-                                            <p>{e.email}</p>
+                                        // loop={false}
+                                        // autoPlay={false}
+                                        animationData={loadingAnimation}
+                                    />
+                                    <p style={{ textAlign: "center", opacity: 0.5 }}>There are no contacts</p>
+                                </div> : users.map(e => {
+                                    return <SnapItem key={e.id} margin={{ left: '10px', right: '10px' }} snapAlign="center">
+                                        <div
+                                            onClick={() => {
+                                                //  chatId, senderId, receipentId, displayName, photoUrl
+                                                const currentUser = auth.currentUser;
+                                                appContext.setChatId(undefined);
+                                                appContext.setSenderId(currentUser?.uid ?? "");
+                                                appContext.setReceipentId(e.id);
+                                                appContext.setDisplayName(e.names);
+                                                appContext.setPhotoUrl(e.photoUrl);
+                                                router.push("/detail");
+
+                                            }}
+                                            className={styles.convocard}
+                                        >
+                                            <Image className={styles.convoimg} src={e.photoUrl} roundedCircle />
+                                            <div className={styles.convoname}>
+                                                <h6>{e.id === auth.currentUser?.uid ?? "" ? "You" : e.names}</h6>
+                                                <p>{e.email}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </SnapItem>
-                            })
+                                    </SnapItem>
+                                })
                         )
 
                     }
