@@ -7,11 +7,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ### Objective
 
 At the end of the task here are the objectives
-- [] Sign-in with google
-- [] View/Delete all your previous conversations
-- [] View messages in one conversation
-- [] Delete a single message in a conversation
-- [] View profile 
+- [x] Sign-in with google
+- [x] View all your previous conversations
+- [ ] Delte a previous conversations
+- [x] View messages in one conversation
+- [ ] Delete a single message in a conversation
+- [x] View my profile 
+- [x] View other user profile 
 
 
 ## Technologies used
@@ -22,16 +24,20 @@ At the end of the task here are the objectives
     * [React](https://reactnative.dev) A web library 
 
 * Networking
-    * [Axios](https://axios.com) as my http client to interact with the iTunes API
+    * [Firebase auth]() for authentication purposes - Google signin
+    * [Firebase firestore](https://axios.com) as my realtime database
     
-* Local Cache
-    * [Realm](https://realm.io/) - Realm's mobile database is an open source, developer-friendly alternative to CoreData and SQLite
 
 * State-management
     * [Mobx](https://react-redux.js.org) - 
 
 * UI
     * [Lottie](https://www.npmjs.com/package/react-lottie) - for loader animations 
+    * [React Icons](https://www.npmjs.com/package/react-lottie) - for loader animations 
+    * [React Boostrap](https://www.npmjs.com/package/react-lottie) - for loader animations 
+    * [React Snap Carousel](https://www.npmjs.com/package/react-lottie) - for loader animations 
+    * [Lottie](https://www.npmjs.com/package/react-lottie) - for loader animations 
+
 
 * Test
     * TODO
@@ -42,8 +48,32 @@ At the end of the task here are the objectives
 First, run the development server:
 
 1. Clone the project
+```bash
+git clone https://github.com/iampato/Talksay-interview-task.git talkchat
+```
 2. Install dependecies
-3. Run the application
+```bash
+npm install 
+```
+3. setup environment variables
+
+The project uses `.env.local` file to abstract firebase credentials from the client side.
+So create an `.env.local` file in the root project file stucture and a paste the following:
+
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=< api key >
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=< auth domain >
+NEXT_PUBLIC_FIREBASE_DATABASE_URL=< database url >
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=< project id >
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=< storage bucket >
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=< fcm sender id >
+NEXT_PUBLIC_FIREBASE_APP_ID=< the app id >
+```
+
+replace the content starting with `<` and ending with `>` with credentials obtained from the firebase console.
+
+
+4. Run the application
 
 ```bash
 npm run dev
