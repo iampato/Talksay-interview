@@ -159,7 +159,7 @@ class MessageStore {
             this.state.addState = undefined;
             this.state.addLoading = "loading";
         });
-        ChatRepository.updateMessage(myUid, receipentId, message)
+        ChatRepository.updateMessage2(myUid, receipentId, message)
             .then(res => {
                 if (res != undefined) {
                     runInAction(() => {
