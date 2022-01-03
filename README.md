@@ -18,10 +18,7 @@ At the end of the task here are the objectives
 - [x] View messages in one conversation
 - [x] View my profile 
 - [x] View other user profile 
-- [ ] Delete a previous conversations
-- [ ] Delete a single message in a conversation
-- [ ] Make everything realtime !!!
-
+- [x] Make everything realtime !!!
 
 ## Technologies used
 
@@ -90,8 +87,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deployment on Vercel
 
-The project has been deployed on Vercel and here is the link:
-
+The project has been deployed on Vercel and here is the link: [talksay](https://talksay-interview-task2.vercel.app/)
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
