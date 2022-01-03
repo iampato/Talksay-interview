@@ -1,0 +1,12 @@
+.bg {
+    background-color: #f5f7fb;
+    min-height: 93vh;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    min-width: 100vw;
+    margin-bottom: 2.2%;
+}
