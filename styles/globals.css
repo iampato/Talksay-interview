@@ -24,8 +24,8 @@ a {
 
 .talk-bubble {
     width: 100vw;
-    margin-top: 8px;
-    margin-bottom: 6px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     /* position: absolute; */
 }
 
@@ -61,12 +61,12 @@ a {
 } */
 
 .tri-right {
-    width: 70vw !important;
+    width: 60vw !important;
     background-color: #7269ef;
     position: relative;
     float: left;
     font-size: 16px;
-    margin-top: 4px;
+    margin-top: 2px;
     text-align: left;
     color: #fff;
     border-top-right-radius: 15px;
@@ -75,7 +75,7 @@ a {
 }
 
 .tri-left {
-    width: 70vw !important;
+    width: 60vw !important;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
     border-top-left-radius: 15px;
@@ -83,7 +83,7 @@ a {
     position: relative;
     float: right;
     font-size: 16px;
-    margin-top: 4px;
+    margin-top: 2px;
     text-align: right;
 }
 
@@ -119,7 +119,7 @@ a {
 /* talk bubble contents */
 
 .talktext {
-    padding: 1em;
+    padding: 0.5em;
     text-align: left;
     line-height: 1.5em;
 }
