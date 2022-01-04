@@ -14,7 +14,7 @@ const ProfilePage: NextPage = () => {
         let currentUser = auth.currentUser;
         setUser(currentUser);
     }, [])
-    
+
     return (
         <>
             <h4 className={styles.title}>Profile</h4>
@@ -45,6 +45,10 @@ const ProfilePage: NextPage = () => {
 
         </>
     );
+}
+ProfilePage.getInitialProps = async (ctx) => {
+
+    return {};
 }
 
 export default ProfilePage;
