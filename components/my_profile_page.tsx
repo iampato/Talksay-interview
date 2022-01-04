@@ -13,8 +13,8 @@ const ProfilePage: NextPage = () => {
     useEffect(() => {
         let currentUser = auth.currentUser;
         setUser(currentUser);
-    }, [])
-    
+    }, [auth.currentUser])
+
     return (
         <>
             <h4 className={styles.title}>Profile</h4>
