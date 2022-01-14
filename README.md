@@ -50,9 +50,9 @@ I added some screenshots in the `screenshots` folder, in the root directory of t
 
 |   |   |
 |---|---|
-| <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/1.png" width="250"/>  |   |   
-| <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/2.png" width="250"/> | <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/3.png" width="250"/>   |
-| <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/4.png" width="250"/>  | <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/5.png" width="250"/>  |   
+| <img src="https://github.com/iampato/Talksay-interview/blob/main/screenshots/1.png" width="250"/>  |   |   
+| <img src="https://github.com/iampato/Talksay-interview/blob/main/screenshots/2.png" width="250"/> | <img src="https://github.com/iampato/Talksay-interview/blob/main/screenshots/3.png" width="250"/>   |
+| <img src="https://github.com/iampato/Talksay-interview/blob/main/screenshots/4.png" width="250"/>  | <img src="https://github.com/iampato/Talksay-interview/blob/main/screenshots/5.png" width="250"/>  |   
 
 
 ## Getting Started
