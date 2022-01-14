@@ -52,7 +52,7 @@ First, run the development server:
 
 1. Clone the project
 ```bash
-git clone https://github.com/iampato/Talksay-interview-task.git talkchat
+git clone https://github.com/iampato/Talksay-interview.git
 ```
 2. Install dependecies
 ```bash
