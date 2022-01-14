@@ -13,7 +13,8 @@ const ProfilePage: NextPage = () => {
     useEffect(() => {
         let currentUser = auth.currentUser;
         setUser(currentUser);
-    }, [])
+
+    }, [auth.currentUser])
 
     return (
         <>
