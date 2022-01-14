@@ -45,6 +45,15 @@ At the end of the task here are the objectives
 * Test
     * TODO
 
+## Screenshots
+I added some screenshots in the `screenshots` folder, in the root directory of the project. Added some GIFs to also show end to end test on the app
+
+|   |   |
+|---|---|
+| <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/1.png" width="250"/>  |   |   
+| <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/2.png" width="250"/> | <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/3.png" width="250"/>   |
+| <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/4.png" width="250"/>  | <img src="https://github.com/iampato/Talksay-interview/blob/master/screenshots/5.png" width="250"/>  |   
+
 
 ## Getting Started
 
